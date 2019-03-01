@@ -55,31 +55,36 @@ class _AllDemDiceState extends State<AllDemDice> {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Image.asset("assets/d$dX.png", scale: 2.0, width: 64.0, height: 64.0),
-                Text("$dX-sided die")
-              ],
-            ),
-            RaisedButton(
-              onPressed: () => _incrementCounter(dX),
-              textColor: Colors.white,
-              padding: const EdgeInsets.all(0.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[Colors.teal, Colors.blue],
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: <Widget>[
+                  ConstrainedBox( 
+                    constraints: BoxConstraints(maxHeight: 64, maxWidth: 64), 
+                    child: Ink.image( image: AssetImage("assets/d$dX.png"), 
+                    fit: BoxFit.fitHeight, 
+                    child: InkWell( 
+                      onTap: () => _incrementCounter(dX), 
+                      ), 
+                    ), 
                   ),
-                ),
-                padding: const EdgeInsets.all(10.0),
-                child: Text('Roll the Dice'),
+                  Text(
+                    'Click to Roll',
+                    style: Theme.of(context).textTheme.caption,
+                    )  
+                ],
               ),
             ),
-            Text(
-                "${_result['d${dX}']}",
-                style: Theme.of(context).textTheme.display1,
+            Expanded(
+              flex: 1,
+              child: Container(
+                alignment: Alignment.center,
+                child:  Text(
+                  "${_result['d${dX}']}",
+                  style: Theme.of(context).textTheme.display1,
+                ),
+              ),
             ),
           ],
         )
@@ -93,26 +98,32 @@ class _AllDemDiceState extends State<AllDemDice> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10.0),
+            ),
             _buildDiceRow(4),
             _buildDiceRow(6),
             _buildDiceRow(8),
             _buildDiceRow(10),
             _buildDiceRow(12),
             _buildDiceRow(20),
-            RaisedButton(
-              onPressed: () => _clearCounters(),
-              textColor: Colors.black,
-              padding: const EdgeInsets.all(0.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[Colors.red, Colors.orange],
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 20.0),
+              child: RaisedButton(
+                onPressed: () => _clearCounters(),
+                textColor: Colors.black,
+                padding: const EdgeInsets.all(0.0),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: <Color>[Colors.red, Colors.orange],
+                    ),
                   ),
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text('Clear all Rolls'),
                 ),
-                padding: const EdgeInsets.all(10.0),
-                child: Text('Clear all Rolls'),
               ),
             ),
           ],
