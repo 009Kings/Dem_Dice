@@ -35,7 +35,7 @@ class _AllDemDiceState extends State<AllDemDice> {
     'd20': 0,
   };
 
-  void _incrementCounter(int max) {
+  void _rollDie(int max) {
     setState(() {
       _result['d${max}'] = Random().nextInt(max) + 1;
     });
@@ -65,7 +65,7 @@ class _AllDemDiceState extends State<AllDemDice> {
                     child: Ink.image( image: AssetImage("assets/d$dX.png"), 
                     fit: BoxFit.fitHeight, 
                     child: InkWell( 
-                      onTap: () => _incrementCounter(dX), 
+                      onTap: () => _rollDie(dX), 
                       ), 
                     ), 
                   ),
