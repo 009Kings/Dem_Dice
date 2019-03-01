@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-void main() => runApp(MyApp());
+void main() => runApp(DemDice());
 
-class MyApp extends StatelessWidget {
+class DemDice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,21 +11,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: MyHomePage(title: 'Roll the Dice'),
+      home: AllDemDice(title: 'Roll the Dice'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class AllDemDice extends StatefulWidget {
+  AllDemDice({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _AllDemDiceState createState() => _AllDemDiceState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AllDemDiceState extends State<AllDemDice> {
   Map<String, int> _result = {
     'd4': 0,
     'd6': 0,
@@ -41,6 +41,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _clearCounters() {
+    setState(() {
+      _result.forEach((key, value)=> _result[key] = 0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -48,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
       return Container(
         child: Row(
           mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Column(
               children: <Widget>[
@@ -93,6 +101,20 @@ class _MyHomePageState extends State<MyHomePage> {
             _buildDiceRow(10),
             _buildDiceRow(12),
             _buildDiceRow(20),
+            RaisedButton(
+              onPressed: () => _clearCounters(),
+              textColor: Colors.black,
+              padding: const EdgeInsets.all(0.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: <Color>[Colors.red, Colors.orange],
+                  ),
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: Text('Clear all Rolls'),
+              ),
+            ),
           ],
         ),
       ),
